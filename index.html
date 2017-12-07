@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	
+	<title>Train Scheduler</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<META NAME="Author" CONTENT="Joshua Silverman">
+	<META NAME="Designer" CONTENT="Joshua Silverman">
+	<META NAME="Game" CONTENT="Train Scheduler">
+	<META NAME="Language" CONTENT="English">
+	<META NAME="distribution" CONTENT="Local">
+	<META NAME="Robots" CONTENT="INDEX,FOLLOW">
+	<META NAME="zipcode" CONTENT="94523">
+	<META NAME="city" CONTENT="Pleasant Hill">
+	<META NAME="country" CONTENT="USA">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./assets/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+	<!--Firebase-->
+
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="jumbotron">
+			<h1 class="h1 text-center">California Train Scheduler</h1>
+		</div>
+
+		<div class="row">
+			<div class="container col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Current Train Scheduler</div>
+				<table id="table">
+					<thead>
+						<tr>
+							<th>Train Name</th>
+							<th>Destination</th>
+							<th>Frequency(min)</th>
+							<th>Next Arrival</th>
+							<th>Minutes Away</th>
+						
+						</tr>
+					</thead>
+
+					<tbody>
+						 <tr>
+                                <!-- Train Name -->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <!-- Destination-->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+
+							<tr>
+                             <!-- Frequency (min) -->
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+							<tr>
+                            <!-- Next Arrival-->
+                            	<td></td>
+                           		<td></td>
+                            	<td></td>
+                            	<td></td>
+                            	<td></td>
+                            </tr>
+
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>	
+	</div>
+	<!--Add Train Form-->
+	<div class="row">
+		
+			<div class="container col-md-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Add Train</div>
+					<form role="form">
+                        <div class="input-group input-group-lg">
+  						<span class="input-group-addon" id="train-name">Train Name</span>
+  						<input type="text" class="form-control" placeholder="Add a train" aria-describedby="sizing-addon1">
+						</div>
+
+                        <div class="input-group input-group-lg">
+  						<span class="input-group-addon" id="destination">Destination</span>
+  						<input type="text" class="form-control" placeholder="Add a destination" aria-describedby="sizing-addon1">
+						</div>
+
+                        <div class="input-group input-group-lg">
+  						<span class="input-group-addon" id="first-train">Time(24hour)</span>
+  						<input type="number" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
+						</div>
+
+                          <div class="input-group input-group-lg">
+  						<span class="input-group-addon" id="frequency">Frequency(min)</span>
+  						<input type="number" class="form-control" placeholder="Add Frequency" aria-describedby="sizing-addon1">
+						</div>
+
+                        <button class="btn btn-primary" id="add-train" type="submit">Submit</button>
+                    </form>
+                 </div>   
+			</div>	
+		</div>
+	</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="./assets/javascript.js"></script>
+</body>
+</html>
