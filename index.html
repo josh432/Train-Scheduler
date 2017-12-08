@@ -46,42 +46,26 @@
 						</tr>
 					</thead>
 
-					<tbody>
-						 <tr>
+					<tbody id="table-body">
+						 	<tr>
                                 <!-- Train Name -->
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                               
                             </tr>
 
                             <tr>
                                 <!-- Destination-->
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                               
                             </tr>
 
 
 							<tr>
                              <!-- Frequency (min) -->
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                              
                             </tr>
 
 							<tr>
                             <!-- Next Arrival-->
-                            	<td></td>
-                           		<td></td>
-                            	<td></td>
-                            	<td></td>
-                            	<td></td>
+                            	
                             </tr>
 
 
@@ -100,23 +84,23 @@
 					<div class="panel-heading">Add Train</div>
 					<form role="form">
                         <div class="input-group input-group-lg">
-  						<span class="input-group-addon" id="train-name">Train Name</span>
-  						<input type="text" class="form-control" placeholder="Add a train" aria-describedby="sizing-addon1">
+  						<span class="input-group-addon" >Train Name</span>
+  						<input type="text" id="train-name" class="form-control" placeholder="Add a train" aria-describedby="sizing-addon1">
 						</div>
 
                         <div class="input-group input-group-lg">
-  						<span class="input-group-addon" id="destination">Destination</span>
-  						<input type="text" class="form-control" placeholder="Add a destination" aria-describedby="sizing-addon1">
+  						<span class="input-group-addon" >Destination</span>
+  						<input type="text" id="destination" class="form-control" placeholder="Add a destination" aria-describedby="sizing-addon1">
 						</div>
 
                         <div class="input-group input-group-lg">
-  						<span class="input-group-addon" id="first-train">Time(24hour)</span>
-  						<input type="number" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
+  						<span class="input-group-addon" >Time(24hour)</span>
+  						<input type="number" id="first-train" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
 						</div>
 
                           <div class="input-group input-group-lg">
-  						<span class="input-group-addon" id="frequency">Frequency(min)</span>
-  						<input type="number" class="form-control" placeholder="Add Frequency" aria-describedby="sizing-addon1">
+  						<span class="input-group-addon" >Frequency(min)</span>
+  						<input type="number" id="frequency" class="form-control" placeholder="Add Frequency" aria-describedby="sizing-addon1">
 						</div>
 
                         <button class="btn btn-primary" id="add-train" type="submit">Submit</button>
@@ -127,6 +111,89 @@
 	</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="./assets/javascript.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCBTKKXiQLp-Jz2cE3q2A2zSHuRrrIkbr4",
+    authDomain: "trainscheduler-36a95.firebaseapp.com",
+    databaseURL: "https://trainscheduler-36a95.firebaseio.com",
+    projectId: "trainscheduler-36a95",
+    storageBucket: "trainscheduler-36a95.appspot.com",
+    messagingSenderId: "858336555618"
+  };
+
+  firebase.initializeApp(config);
+
+var database = firebase.database();
+
+var trainName = "";
+var destinationCity = "";
+var firstTrain = "";
+var timedFrequency = "";
+var minutesAway = "";
+
+$('#add-train').on("click", function(){
+	event.preventDefault();
+
+	trainName = $('#train-name').val().trim();
+	destinationCity = $('#destination').val().trim();
+	firstTrain = $('#first-train').val().trim();
+	timedFrequency = $('#frequency').val().trim();
+
+	 var trainData = {
+        name: trainName,
+        destination: destinationCity,
+        time: firstTrain,
+        frequency: timedFrequency
+      };
+
+     database.ref().push(trainData);
+
+     console.log(trainData.name);
+     console.log(trainData.destination);
+     console.log(trainData.time);
+     console.log(trainData.frequency);
+
+     $('#train-name').val('');
+     $('#destination').val('');
+     $('#first-train').val('');
+     $('#frequency').val('');
+});
+
+database.ref().on("child_added", function(childSnapshot) {
+
+ 	  console.log(childSnapshot.val().name);
+      console.log(childSnapshot.val().destination);
+      console.log(childSnapshot.val().time);
+      console.log(childSnapshot.val().frequency);
+
+
+      var row = $('<tr></tr>').appendTo('#table-body');
+      $('<td></td>').appendTo(row).text(childSnapshot.val().name);
+      $('<td></td>').appendTo(row).text(childSnapshot.val().destination);
+      $('<td></td>').appendTo(row).text(childSnapshot.val().time);
+      $('<td></td>').appendTo(row).text(childSnapshot.val().frequency);
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
 </body>
 </html>
