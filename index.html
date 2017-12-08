@@ -16,7 +16,7 @@
 	<META NAME="country" CONTENT="USA">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="./assets/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
 	<!--Firebase-->
 
@@ -27,6 +27,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1 class="h1 text-center">California Train Scheduler</h1>
+			<h2 class="h2 text-center">All Aboard!</h2>
 		</div>
 
 		<div class="row">
@@ -37,11 +38,11 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>Train Name</th>
-							<th>Destination</th>
-							<th>Frequency(min)</th>
-							<th>Next Arrival</th>
-							<th>Minutes Away</th>
+							<th><i class="fas fa-train"></i> Train Name</th>
+							<th><i class="fas fa-map-marker"></i> Destination</th>
+							<th><i class="fas fa-spinner"></i> Frequency per day</th>
+							<th><i class="fas fa-clock"></i> Arrival Time</th>
+							<th><i class="far fa-hand-point-down"></i> Minutes Away</th>
 						
 						</tr>
 					</thead>
@@ -64,8 +65,13 @@
                             </tr>
 
 							<tr>
-                            <!-- Next Arrival-->
+                            <!-- Arrival time-->
                             	
+                            </tr>
+
+                            <tr>
+							<!--Minutes away -->
+
                             </tr>
 
 
@@ -94,14 +100,16 @@
 						</div>
 
                         <div class="input-group input-group-lg">
-  						<span class="input-group-addon" >Time(24hour)</span>
+  						<span class="input-group-addon" >Arrival Time(24hr)</span>
   						<input type="number" id="first-train" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
 						</div>
 
                           <div class="input-group input-group-lg">
-  						<span class="input-group-addon" >Frequency(min)</span>
-  						<input type="number" id="frequency" class="form-control" placeholder="Add Frequency" aria-describedby="sizing-addon1">
+  						<span class="input-group-addon" >Frequency per day</span>
+  						<input type="number" id="frequency" class="form-control" placeholder="Add a frequency" aria-describedby="sizing-addon1">
 						</div>
+
+
 
                         <button class="btn btn-primary" id="add-train" type="submit">Submit</button>
                     </form>
@@ -173,8 +181,8 @@ database.ref().on("child_added", function(childSnapshot) {
       var row = $('<tr></tr>').appendTo('#table-body');
       $('<td></td>').appendTo(row).text(childSnapshot.val().name);
       $('<td></td>').appendTo(row).text(childSnapshot.val().destination);
-      $('<td></td>').appendTo(row).text(childSnapshot.val().time);
       $('<td></td>').appendTo(row).text(childSnapshot.val().frequency);
+      $('<td></td>').appendTo(row).text(childSnapshot.val().time);
 
 
 
