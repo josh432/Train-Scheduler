@@ -7,4 +7,15 @@ header, {
 
 body {
 	font-family: 'Lora', serif;
+	background-image: url('../assets/images/wood.png');
+}
+
+.jumbotron {
+
+	background-image: url('../assets/images/flag.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: red;
+	text-shadow: 1px 1px black;
 }
