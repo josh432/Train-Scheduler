@@ -102,13 +102,13 @@
 						</div>
 
                         <div class="input-group input-group-lg">
-  						<span class="input-group-addon" >First Train Arrival Time</span>
-  						<input type="number" id="first-train" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
+  						<span class="input-group-addon" >1st ArrTime(24hr)</span>
+  						<input type="text" id="first-train" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
 						</div>
 
                           <div class="input-group input-group-lg">
   						<span class="input-group-addon" >Frequency(min)</span>
-  						<input type="number" id="frequency" class="form-control" placeholder="Add a frequency" aria-describedby="sizing-addon1">
+  						<input type="text" id="frequency" class="form-control" placeholder="Add a frequency" aria-describedby="sizing-addon1">
 						</div><br>
 
 
@@ -146,19 +146,19 @@ function date(){
 
 date();
 
-var trainName = "";
-var destinationCity = "";
-var firstTrain = "";
-var timedFrequency = "";
-var minutesAway = "";
+//var trainName = "";
+//var destinationCity = "";
+//var firstTrain = "";
+//var timedFrequency = "";
+//var minutesAway = "";
 
 $('#add-train').on("click", function(){
 	event.preventDefault();
 
-	trainName = $('#train-name').val().trim();
-	destinationCity = $('#destination').val().trim();
-	firstTrain = $('#first-train').val().trim();
-	timedFrequency = $('#frequency').val().trim();
+	var trainName = $('#train-name').val().trim();
+	var destinationCity = $('#destination').val().trim();
+	var firstTrain = moment($("#first-train").val().trim(), "HH:mm").subtract(1,"years").format("X");
+	var timedFrequency = $('#frequency').val().trim();
 
 	 var trainData = {
         name: trainName,
@@ -192,26 +192,26 @@ database.ref().on("child_added", function(childSnapshot) {
       var firstTrain = childSnapshot.val().time;
       var timedFrequency = childSnapshot.val().frequency;
 
-      var currentTime = moment();
-	console.log("Local Current Time: " + moment(currentTime).format("HH:mm"));
+  //    var currentTime = moment();
+//	console.log("Local Current Time: " + moment(currentTime).format("HH:mm"));
 
-	var timeDifference = moment().diff(moment(currentTime), "minutes");
-	console.log("Time Difference from Current Time to Next Train: " + timeDifference);
+//	var timeDifference = moment().diff(moment(currentTime), "minutes");
+//	console.log("Time Difference from Current Time to Next Train: " + timeDifference);
 
- 	var timeRemaining = timeDifference % timedFrequency;
-      console.log(timeRemaining);
+// 	var timeRemaining = timeDifference % timedFrequency;
+//      console.log(timeRemaining);
 
-    var minutesAway = timedFrequency - timeRemaining;
-      console.log("Minutes Away from Next Arrival: " + minutesAway);
+ //   var minutesAway = timedFrequency - timeRemaining;
+  //    console.log("Minutes Away from Next Arrival: " + minutesAway);
 
-      var nextArrival = moment().add(minutesAway, "minutes").format("HH:mm");
-      console.log("Next Train Arrival Time: " + moment(nextArrival).format("HH:mm"));
+   //   var nextArrival = moment().add(minutesAway, "minutes").format("HH:mm");
+   //   console.log("Next Train Arrival Time: " + moment(nextArrival).format("HH:mm"));
 
-//var timeDifference = moment().diff(moment.unix(firstTrain), "minutes");
-//var minutesAway = timedFrequency - (timeDifference % timedFrequency);
-//console.log("Minutes Away from Next Arrival: " + minutesAway);
-//var nextTrain = moment().add(minutesAway, "minutes").format('HH:mm');
-//console.log( "Next Train Arrival Time: " + nextTrain);
+var timeDifference = moment().diff(moment.unix(firstTrain), "minutes");
+var minutesAway = timedFrequency - (timeDifference % timedFrequency);
+console.log("Minutes Away from Next Arrival: " + minutesAway);
+var nextArrival = moment().add(minutesAway, "minutes").format('HH:mm');
+console.log( "Next Train Arrival Time: " + nextArrival);
 
 
     // var row = $('<tr></tr>').appendTo('#table-body');
