@@ -32,6 +32,7 @@
 
 		<div class="row">
 			<div class="container col-md-12">
+				<h4 class="text-center"><span id="todaydate"></span></h4>
 				<div class="panel panel-primary">
 					<div class="panel-heading"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> Current Train Schedule</div>
 				<div class="table-responsive">	
@@ -47,31 +48,32 @@
 						</tr>
 					</thead>
 
-					<tbody id="table-body">
+					<tbody>
 						 	<tr>
                                 <!-- Train Name -->
-                               
+                              
                             </tr>
 
                             <tr>
                                 <!-- Destination-->
-                               
+                             
                             </tr>
+
 
 
 							<tr>
                              <!-- Frequency (min) -->
-                              
+                            
                             </tr>
 
 							<tr>
                             <!-- Arrival time-->
-                            	
+                        	
                             </tr>
 
                             <tr>
 							<!--Minutes away -->
-
+							
                             </tr>
 
 
@@ -100,7 +102,7 @@
 						</div>
 
                         <div class="input-group input-group-lg">
-  						<span class="input-group-addon" >Next Arrival Time</span>
+  						<span class="input-group-addon" >First Train Arrival Time</span>
   						<input type="number" id="first-train" class="form-control" placeholder="Add a time" aria-describedby="sizing-addon1">
 						</div>
 
@@ -120,7 +122,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
-
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 <script>
   // Initialize Firebase
   var config = {
@@ -135,6 +137,14 @@
   firebase.initializeApp(config);
 
 var database = firebase.database();
+
+setInterval(date,1000);
+function date(){
+//This function displays the time of day at the top of the page and updates every second.
+	$("#todaydate").html(moment(new Date()).format('LTS'));
+}
+
+date();
 
 var trainName = "";
 var destinationCity = "";
@@ -177,18 +187,55 @@ database.ref().on("child_added", function(childSnapshot) {
       console.log(childSnapshot.val().time);
       console.log(childSnapshot.val().frequency);
 
+      var trainName = childSnapshot.val().name;
+      var destinationCity = childSnapshot.val().destination;
+      var firstTrain = childSnapshot.val().time;
+      var timedFrequency = childSnapshot.val().frequency;
 
-      var row = $('<tr></tr>').appendTo('#table-body');
-      $('<td></td>').appendTo(row).text(childSnapshot.val().name);
-      $('<td></td>').appendTo(row).text(childSnapshot.val().destination);
-      $('<td></td>').appendTo(row).text(childSnapshot.val().frequency);
-      $('<td></td>').appendTo(row).text(childSnapshot.val().time);
+      var currentTime = moment();
+	console.log("Local Current Time: " + moment(currentTime).format("HH:mm"));
+
+	var timeDifference = moment().diff(moment(currentTime), "minutes");
+	console.log("Time Difference from Current Time to Next Train: " + timeDifference);
+
+ 	var timeRemaining = timeDifference % timedFrequency;
+      console.log(timeRemaining);
+
+    var minutesAway = timedFrequency - timeRemaining;
+      console.log("Minutes Away from Next Arrival: " + minutesAway);
+
+      var nextArrival = moment().add(minutesAway, "minutes").format("HH:mm");
+      console.log("Next Train Arrival Time: " + moment(nextArrival).format("HH:mm"));
+
+//var timeDifference = moment().diff(moment.unix(firstTrain), "minutes");
+//var minutesAway = timedFrequency - (timeDifference % timedFrequency);
+//console.log("Minutes Away from Next Arrival: " + minutesAway);
+//var nextTrain = moment().add(minutesAway, "minutes").format('HH:mm');
+//console.log( "Next Train Arrival Time: " + nextTrain);
+
+
+    // var row = $('<tr></tr>').appendTo('#table-body');
+    //  $('<td></td>').appendTo(row).text(childSnapshot.val().name);
+     // $('<td></td>').appendTo(row).text(childSnapshot.val().destination);
+     // $('<td></td>').appendTo(row).text(childSnapshot.val().frequency);
+     // $('<td></td>').appendTo(row).text(childSnapshot.val().nextTrain);
+     // $('<td></td>').appendTo(row).text(childSnapshot.val().minutesAway);
+
+$(".table > tbody").append(("<tr><td>" + trainName + "</td><td>" + destinationCity + "</td><td>" +
+          timedFrequency + "</td><td>" + nextArrival + "</td><td>" + minutesAway + "</td><td>"));
+
+     
+
 
 
 
 
 
 });
+
+	
+
+
 
 
 
